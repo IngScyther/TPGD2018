@@ -4,18 +4,16 @@ use GD1C2018
 --01
 create table ASPIRE_GDD.Hotel 
 (
-	id_hotel int identity (1,1) not null primary key,
-	ciudad varchar(50) not null,
-	calle varchar(50) not null,
-	nro_calle int not null, 
-	cantidad_de_estrellas int not null,
-	recarga_estrellas int not null,
-	telefono bigint not null,-- confirmar
-	mail varchar(50) not null,
-	id_regimen int not null,
-	fecha_de_creacion date not null, 
-	direccion varchar(50) not null,
-	pais varchar(50) not null,
+	id_hotel int identity (1,1) primary key,
+	ciudad varchar(50),
+	calle varchar(50),
+	nro_calle int, 
+	cantidad_de_estrellas int,
+	recarga_estrellas int,
+	telefono bigint,
+	mail varchar(50),
+	fecha_de_creacion date, 
+	pais varchar(50),
 );
 --02
 create table ASPIRE_GDD.Hotel_Cerrado 
@@ -112,15 +110,15 @@ CREATE TABLE ASPIRE_GDD.estadia(
 --14
 create table ASPIRE_GDD.Reserva 
 (
-	fecha_inicio date not null,
-	id_codigo_reserva int identity (1,1) not null primary key,
-	cantidad_noches int not null,
-	fecha_fin date not null,
-	id_cliente int not null REFERENCES ASPIRE_GDD.Cliente,
-	id_hotel int not null REFERENCES ASPIRE_GDD.Hotel,
-	id_estadia int not null REFERENCES ASPIRE_GDD.Estadia,
-	id_regimen int not null REFERENCES ASPIRE_GDD.regimen,
-	id_clienteOrigen int not null,
+	fecha_inicio date,
+	id_codigo_reserva int identity (1,1)primary key,
+	cantidad_noches int,
+	fecha_fin date,
+	id_cliente int REFERENCES ASPIRE_GDD.Cliente,
+	id_hotel int REFERENCES ASPIRE_GDD.Hotel,
+	id_estadia int REFERENCES ASPIRE_GDD.Estadia,
+	id_regimen int REFERENCES ASPIRE_GDD.regimen,
+	id_clienteOrigen int,
 	estado varchar(50),--confirmar
 	precio int
 	--constraint pk_cc  primary key(id_Codigo)
