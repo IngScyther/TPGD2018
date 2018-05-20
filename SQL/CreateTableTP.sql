@@ -112,6 +112,7 @@ create table ASPIRE_GDD.Reserva
 (
 	fecha_inicio date,
 	id_codigo_reserva int identity (1,1)primary key,
+	id_codigo_viejo int ,
 	cantidad_noches int,
 	fecha_fin date,
 	id_cliente int REFERENCES ASPIRE_GDD.Cliente,
