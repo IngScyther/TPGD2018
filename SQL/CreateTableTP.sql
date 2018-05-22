@@ -69,7 +69,8 @@ CREATE TABLE ASPIRE_GDD.empleado(   -- ojo doble nombre PK idusuempleado Y idusu
 );
 --10
 CREATE TABLE ASPIRE_GDD.tipoHabitacion(
-	tipo_codigo int IDENTITY(1,1) PRIMARY KEY,
+	--tipo_codigo int IDENTITY(1,1) PRIMARY KEY, --Definir id_tipos para agregar nuevos tipos.
+	tipo_codigo int PRIMARY KEY,
 	descripcion varchar(255),
 	tipo_porcentual numeric (18,0) NOT NULL,
 	
@@ -104,8 +105,8 @@ CREATE TABLE ASPIRE_GDD.estadia(
 	fecha_inicio datetime, -- hay campos nulos en maestra, no corresp el NOT NULL
 	fecha_egreso datetime,  -- FORMATO PARA PRUEBAS; datetime NOT NULL ,
 	cantidad_noches numeric(18,0), -- no corresp el NOT NULL,
-	id_consumible int REFERENCES ASPIRE_GDD.consumible(id_codigo) NOT NULL,
-	id_regimen int REFERENCES ASPIRE_GDD.regimen(id_regimen) NOT NULL
+	id_consumible int REFERENCES ASPIRE_GDD.consumible(id_codigo) /*NOT NULL*/,
+	id_regimen int REFERENCES ASPIRE_GDD.regimen(id_regimen) --NOT NULL
 )
 --14
 create table ASPIRE_GDD.Reserva 
