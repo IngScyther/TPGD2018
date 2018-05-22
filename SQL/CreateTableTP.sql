@@ -129,12 +129,12 @@ create table ASPIRE_GDD.Reserva
 --15
 CREATE TABLE ASPIRE_GDD.habitacion(
 	id_habitacion int IDENTITY(1,1) PRIMARY KEY,
-	nro numeric(18,0) NOT NULL,
+	nro numeric(18,0) /*NOT NULL*/,
 	piso integer,
-	id_codigo_reserva int REFERENCES ASPIRE_GDD.reserva(id_codigo_reserva) NOT NULL, -- verificar nom dif en Cliente, hab y reser
-	tipo_codigo int REFERENCES ASPIRE_GDD.tipoHabitacion NOT NULL,
-	id_hotel int REFERENCES ASPIRE_GDD.hotel(id_hotel) NOT NULL,
-	tipo_descripcion varchar(255) NOT NULL,
+	id_codigo_reserva int REFERENCES ASPIRE_GDD.reserva(id_codigo_reserva) /*NOT NULL*/, -- verificar nom dif en Cliente, hab y reser
+	tipo_codigo int REFERENCES ASPIRE_GDD.tipoHabitacion /*NOT NULL*/,
+	id_hotel int REFERENCES ASPIRE_GDD.hotel(id_hotel) /*NOT NULL*/,
+--	tipo_descripcion varchar(255) NOT NULL,
 	habitacion_frente char NOT NULL,
 	estado bit NOT NULL,
 	estadistica_de_dias varchar(255) NOT NULL
