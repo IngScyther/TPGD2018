@@ -78,17 +78,35 @@ GO
 
 
 /*  Migrar tabla Habitacion */
-delete ASPIRE_GDD.habitacion
+
 INSERT INTO ASPIRE_GDD.habitacion(
-	nro, piso, habitacion_frente, estado, estadistica_de_dias, id_hotel)
+	nro, piso, habitacion_frente, estado, estadistica_de_dias, id_hotel,tipo_codigo)
 SELECT DISTINCT Habitacion_Numero, Habitacion_Piso,habitacion_frente , 1, 'EstadisticaDeDias',
-	( select id_hotel from ASPIRE_GDD.Hotel H where H.ciudad = gd.Hotel_Ciudad and h.calle = gd.Hotel_Calle and h.nro_calle = gd.Hotel_Nro_Calle)
+	(select id_hotel from ASPIRE_GDD.Hotel H where H.ciudad = gd.Hotel_Ciudad and h.calle = gd.Hotel_Calle and h.nro_calle = gd.Hotel_Nro_Calle and h.cantidad_de_estrellas=gd.Hotel_CantEstrella and h.recarga_estrellas = gd.Hotel_Recarga_Estrella),
+	Habitacion_Tipo_Codigo
 FROM gd_esquema.Maestra gd
 --JOIN TIPO_HABITEACION FK
 --JOIN HOTELES FK
 GROUP BY Hotel_Ciudad, Hotel_Calle, Hotel_Nro_Calle, Hotel_CantEstrella, Hotel_Recarga_Estrella, 
 Habitacion_Numero, Habitacion_Piso, Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_Tipo_Porcentual, Habitacion_Frente
 
-/* Ver tabla Tipo_HAbitacion */
+/* Ver tabla Habitacion */
 select * from ASPIRE_GDD.Habitacion
 GO
+
+/*  Migrar tabla Estadia */
+INSERT INTO ASPIRE_GDD.estadia(
+	fecha_inicio, fecha_egreso, cantidad_noches, id_habitacion)
+SELECT Estadia_Fecha_Inicio, Estadia_Fecha_Inicio + Estadia_Cant_Noches , Estadia_Cant_Noches,
+	(select id_habitacion from ASPIRE_GDD.habitacion ha join ASPIRE_GDD.Hotel Ho on (ha.id_hotel = ho.id_hotel)
+	where gd.Hotel_Ciudad = ho.ciudad and gd.Hotel_Calle = ho.calle and gd.Hotel_Nro_Calle = Ho.nro_calle and
+	 gd.Hotel_CantEstrella = ho.cantidad_de_estrellas and gd.Hotel_Recarga_Estrella = Hotel_Recarga_Estrella and 
+	 gd.Habitacion_Numero = ha.nro and gd.Habitacion_Piso= ha.piso and gd.Habitacion_Frente = ha.habitacion_frente)
+FROM gd_esquema.Maestra gd
+where Estadia_Fecha_Inicio is  not null
+
+/* Ver tabla Estadia */
+delete ASPIRE_GDD.estadia
+select * from ASPIRE_GDD.estadia
+Go
+

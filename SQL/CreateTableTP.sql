@@ -100,15 +100,29 @@ create table ASPIRE_GDD.consumible
 descripcion varchar(50),
 precio decimal)
 --13
+CREATE TABLE ASPIRE_GDD.habitacion(
+	id_habitacion int IDENTITY(1,1) PRIMARY KEY,
+	nro numeric(18,0) /*NOT NULL*/,
+	piso integer,
+--	id_codigo_reserva int REFERENCES ASPIRE_GDD.reserva(id_codigo_reserva) /*NOT NULL*/, -- verificar nom dif en Cliente, hab y reser
+	tipo_codigo int REFERENCES ASPIRE_GDD.tipoHabitacion /*NOT NULL*/,
+	id_hotel int REFERENCES ASPIRE_GDD.hotel(id_hotel) /*NOT NULL*/,
+--	tipo_descripcion varchar(255) NOT NULL,
+	habitacion_frente char NOT NULL,
+	estado bit NOT NULL,
+	estadistica_de_dias varchar(255) NOT NULL
+);
+--14
 CREATE TABLE ASPIRE_GDD.estadia(
 	id_estadia int IDENTITY(1,1) PRIMARY KEY,
-	fecha_inicio datetime, -- hay campos nulos en maestra, no corresp el NOT NULL
+	fecha_inicio datetime not null, -- hay campos nulos en maestra, no corresp el NOT NULL
 	fecha_egreso datetime,  -- FORMATO PARA PRUEBAS; datetime NOT NULL ,
 	cantidad_noches numeric(18,0), -- no corresp el NOT NULL,
 	id_consumible int REFERENCES ASPIRE_GDD.consumible(id_codigo) /*NOT NULL*/,
-	id_regimen int REFERENCES ASPIRE_GDD.regimen(id_regimen) --NOT NULL
+	id_regimen int REFERENCES ASPIRE_GDD.regimen(id_regimen),
+	id_habitacion int REFERENCES ASPIRE_GDD.habitacion 
 )
---14
+--15
 create table ASPIRE_GDD.Reserva 
 (
 	fecha_inicio date,
@@ -126,19 +140,7 @@ create table ASPIRE_GDD.Reserva
 	--constraint pk_cc  primary key(id_Codigo)
 	--constraint fk_fc1 foreign key(id) references otratabla (id2)
 );
---15
-CREATE TABLE ASPIRE_GDD.habitacion(
-	id_habitacion int IDENTITY(1,1) PRIMARY KEY,
-	nro numeric(18,0) /*NOT NULL*/,
-	piso integer,
-	id_codigo_reserva int REFERENCES ASPIRE_GDD.reserva(id_codigo_reserva) /*NOT NULL*/, -- verificar nom dif en Cliente, hab y reser
-	tipo_codigo int REFERENCES ASPIRE_GDD.tipoHabitacion /*NOT NULL*/,
-	id_hotel int REFERENCES ASPIRE_GDD.hotel(id_hotel) /*NOT NULL*/,
---	tipo_descripcion varchar(255) NOT NULL,
-	habitacion_frente char NOT NULL,
-	estado bit NOT NULL,
-	estadistica_de_dias varchar(255) NOT NULL
-);
+
 --16
 create table ASPIRE_GDD.Regimen_x_Hotel 
 (

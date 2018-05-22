@@ -16,11 +16,11 @@ drop table ASPIRE_GDD.estadiaXCliente
 --16
 drop table ASPIRE_GDD.Regimen_x_Hotel
 --15
-drop table ASPIRE_GDD.habitacion
---14
 drop table ASPIRE_GDD.Reserva
---13
+--14
 drop table ASPIRE_GDD.estadia
+--13
+drop table ASPIRE_GDD.habitacion
 --12
 drop table ASPIRE_GDD.consumible
 --11
