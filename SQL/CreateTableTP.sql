@@ -27,7 +27,7 @@ create table ASPIRE_GDD.Hotel_Cerrado
 );
 --03
 create table ASPIRE_GDD.regimen ---En la tabla regimen x Hotel nos faltó el id del hotel.
-(id_regimen int primary key,
+(id_regimen int IDENTITY(1,1) PRIMARY KEY,
 descripcion varchar(100),
 precio decimal)
 --04
@@ -161,7 +161,7 @@ create table ASPIRE_GDD.factura
 fecha date,
 total decimal,
 forma_de_pago varchar(10),
-id_cliente int REFERENCES ASPIRE_GDD.cliente(id_usuario_cliente) NOT NULL 
+id_cliente int REFERENCES ASPIRE_GDD.cliente(id_usuario_cliente) /*NOT NULL*/ 
  )
 --19
 create table ASPIRE_GDD.item

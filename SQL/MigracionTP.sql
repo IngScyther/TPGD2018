@@ -1,7 +1,7 @@
 
 
 
-
+use GD1c2018
 
 /*Ver tabla maestra*/
 select * from gd_esquema.Maestra
@@ -20,19 +20,12 @@ select * from ASPIRE_GDD.Hotel
 order by ciudad,calle
 Go
 
---11
-/*  Migrar tabla cliente */
-INSERT INTO ASPIRE_GDD.cliente 
-( mail,pasaporte_numero, apellido, nombre, fecha_nacimiento,  domicilio_calle, nro_calle, piso, dto, nacionalidad, habilitado, estadisticasPuntos)
-SELECT  distinct Cliente_Mail, Cliente_Pasaporte_Nro, Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, Cliente_Nacionalidad, 1, 0
---1 es habilitado y 0 desha  admas inicia con 0 PUNTOS
-FROM gd_esquema.Maestra
-GROUP BY Cliente_Pasaporte_Nro, Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac, Cliente_Mail, Cliente_Dom_Calle,  Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, Cliente_Nacionalidad
-order by  Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac
-Go
-	/* Ver tabla clientes */
-	select * from ASPIRE_GDD.cliente
-	Go
+--3
+insert into ASPIRE_GDD.regimen (descripcion, precio)
+select regimen_descripcion, regimen_precio
+from gd_esquema.Maestra
+group by Regimen_Descripcion, Regimen_Precio
+
 --10
 /*  Migrar tabla Tipo_Habitacion */
 INSERT INTO  ASPIRE_GDD.tipoHabitacion(tipo_codigo,  --OJO CON tipoCodigo SIN GUIONBAJO
@@ -43,6 +36,26 @@ GO
 	/* Ver tabla Tipo_HAbitacion */ 
 	select * from ASPIRE_GDD.tipoHabitacion
 	GO
+	--11
+/*  Migrar tabla cliente */
+INSERT INTO ASPIRE_GDD.cliente 
+( mail,pasaporte_numero, apellido, nombre, fecha_nacimiento,  domicilio_calle, nro_calle, piso, dto, nacionalidad, habilitado, estadisticasPuntos)
+SELECT  Cliente_Mail, Cliente_Pasaporte_Nro, Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, Cliente_Nacionalidad, 1, 0
+--1 es habilitado y 0 desha  admas inicia con 0 PUNTOS
+FROM gd_esquema.Maestra
+GROUP BY Cliente_Pasaporte_Nro, Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac, Cliente_Mail, Cliente_Dom_Calle,  Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, Cliente_Nacionalidad
+order by  Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac
+Go
+	/* Ver tabla clientes */
+	select * from ASPIRE_GDD.cliente
+	Go
+--12
+INSERT INTO  ASPIRE_GDD.consumible(id_codigo,descripcion,precio)
+select consumible_codigo, consumible_descripcion, consumible_precio
+from gd_esquema.Maestra
+where Consumible_Codigo is not null
+group by consumible_codigo, consumible_descripcion, consumible_precio
+
 --13
 /*  Migrar tabla Habitacion */
 INSERT INTO ASPIRE_GDD.habitacion(
@@ -92,3 +105,18 @@ Go
 	delete ASPIRE_GDD.Reserva
 	select * from ASPIRE_GDD.Reserva	
 	Go
+--18
+
+INSERT INTO ASPIRE_GDD.factura 
+(fecha,total,id_cliente)
+select gd1.Factura_Fecha,gd1.Factura_Total,id_usuario_cliente from ASPIRE_GDD.cliente c, gd_esquema.Maestra gd1  	
+where gd1.Cliente_Mail = c.mail and gd1.Factura_Fecha is not null and gd1.Factura_Total is not null
+group by id_usuario_cliente,gd1.Factura_Fecha,gd1.Factura_Total
+
+--19
+
+select Item_Factura_Cantidad, Item_Factura_Monto
+from gd_esquema.Maestra , Factura, Consumible
+where Factura_Nro = id_factura
+and consumible_codigo = id_codigo
+
