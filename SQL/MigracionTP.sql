@@ -117,8 +117,8 @@ group by id_usuario_cliente,gd1.Factura_Fecha,gd1.Factura_Total
 select * from ASPIRE_GDD.factura	
 Go
 --19 --Falta armar
-/*  Migrar tabla Completar tabla */ --Falta ID Consumible
---INSERT INTO ASPIRE_GDD.factura
+/*  Migrar tabla item  */ --Falta ID Consumible
+INSERT INTO ASPIRE_GDD.item
 select Item_Factura_Cantidad, Item_Factura_Monto
 from gd_esquema.Maestra , Factura, Consumible
 where Factura_Nro = id_factura
