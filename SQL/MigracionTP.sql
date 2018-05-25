@@ -25,6 +25,9 @@ select regimen_descripcion, regimen_precio
 from gd_esquema.Maestra
 group by Regimen_Descripcion, Regimen_Precio
 Go
+/* ver tabla Regimen */
+select * from ASPIRE_GDD.regimen
+Go
 --10
 /*  Migrar tabla Tipo_Habitacion */ --OK
 INSERT INTO  ASPIRE_GDD.tipoHabitacion(tipo_codigo,  --OJO CON tipoCodigo SIN GUIONBAJO
@@ -33,9 +36,9 @@ SELECT DISTINCT Habitacion_Tipo_Codigo,Habitacion_Tipo_Descripcion, Habitacion_T
 FROM gd_esquema.Maestra
 GO
 	/* Ver tabla Tipo_HAbitacion */ 
-	select * from ASPIRE_GDD.tipoHabitacion
-	GO
-	--11
+select * from ASPIRE_GDD.tipoHabitacion
+GO
+--11
 /*  Migrar tabla cliente */ --OK
 INSERT INTO ASPIRE_GDD.cliente 
 ( mail,pasaporte_numero, apellido, nombre, fecha_nacimiento,  domicilio_calle, nro_calle, piso, dto, nacionalidad, habilitado, estadisticasPuntos)
@@ -46,8 +49,8 @@ GROUP BY Cliente_Pasaporte_Nro, Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_
 order by  Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac
 Go
 	/* Ver tabla clientes */
-	select * from ASPIRE_GDD.cliente
-	Go
+select * from ASPIRE_GDD.cliente
+Go
 --12
 /*  Migrar tabla Consumible */ --OK
 INSERT INTO  ASPIRE_GDD.consumible(id_codigo,descripcion,precio)
@@ -98,11 +101,16 @@ SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches,
 	from gd_esquema.Maestra m
 	join ASPIRE_GDD.Hotel h on (m.Hotel_Ciudad = h.ciudad and m.Hotel_Calle = h.calle)
 	where m.Hotel_Ciudad = M1.Hotel_Ciudad and m.Hotel_Calle = M1.Hotel_Calle) a,
-	null, 
-null -- Agregar regimen y cliente
+	/*Cliente*/null, 
+	/*Regimen*/(--select distinct id_regimen from ASPIRE_GDD.regimen r
+	--where M1.Regimen_Precio = r.precio and M1.Regimen_Descripcion = r.descripcion
+	(select distinct r.id_regimen
+	from gd_esquema.Maestra m
+	join ASPIRE_GDD.regimen r on (m.Regimen_Descripcion = r.descripcion and m.Regimen_Precio = r.precio)
+	where r.descripcion = M1.Regimen_Descripcion and r.precio = M1.Regimen_Precio)
+	)	
 FROM gd_esquema.Maestra M1
-Go
-	/* ver tabla Reserva */
+Go	/* ver tabla Reserva */
 	delete ASPIRE_GDD.Reserva
 	select * from ASPIRE_GDD.Reserva	
 	Go
