@@ -95,7 +95,7 @@ Go
 --15
 /*Migrar Reserva*/ -- Cliente %% id_regimen %% Estado %% Precio
 INSERT INTO ASPIRE_GDD.Reserva 
-( id_codigo_viejo , fecha_inicio,cantidad_noches, id_hotel, id_clienteOrigen,id_regimen)
+( id_codigo_viejo , fecha_inicio,cantidad_noches, id_hotel, id_clienteOrigen,id_regimen,id_estadia)
 SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches, 
 	/*Id_Hotel*/(select distinct h.id_hotel
 	from gd_esquema.Maestra m
@@ -116,13 +116,23 @@ SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches,
 	and M1.Cliente_Nacionalidad = c.nacionalidad
 	), 
 	
-	/*Regimen*/(--select distinct id_regimen from ASPIRE_GDD.regimen r
-	--where M1.Regimen_Precio = r.precio and M1.Regimen_Descripcion = r.descripcion
+	/*Regimen*/
 	(select distinct r.id_regimen
 	from gd_esquema.Maestra m
 	join ASPIRE_GDD.regimen r on (m.Regimen_Descripcion = r.descripcion and m.Regimen_Precio = r.precio)
-	where r.descripcion = M1.Regimen_Descripcion and r.precio = M1.Regimen_Precio)
-	)	
+	where r.descripcion = M1.Regimen_Descripcion and r.precio = M1.Regimen_Precio
+	),
+	/*Estadia*/
+	( select distinct e.id_estadia
+	from gd_esquema.Maestra m
+	join ASPIRE_GDD.estadia e on (m.Estadia_Fecha_Inicio = e.fecha_inicio and m.Estadia_Cant_Noches = e.cantidad_noches)
+	join ASPIRE_GDD.habitacion h on (e.id_habitacion = h.id_habitacion and m.Habitacion_Frente = h.habitacion_frente and m.Habitacion_Piso = h.piso and m.Habitacion_Numero=h.nro)
+	join ASPIRE_GDD.tipoHabitacion th on (th.tipo_codigo = h.id_habitacion and m.Habitacion_Tipo_Descripcion=th.descripcion and m.Habitacion_Tipo_Porcentual=th.tipo_porcentual)
+	join ASPIRE_GDD.Hotel Ho on (Ho.id_hotel = h.id_hotel)
+	where M1.Hotel_Ciudad = ho.ciudad and M1.Hotel_Calle = ho.calle and M1.Hotel_Nro_Calle = Ho.nro_calle and
+	 M1.Hotel_CantEstrella = ho.cantidad_de_estrellas and M1.Hotel_Recarga_Estrella = Hotel_Recarga_Estrella and 
+	 M1.Habitacion_Numero = h.nro and M1.Habitacion_Piso= h.piso and M1.Habitacion_Frente = h.habitacion_frente
+	 and M1.Estadia_Cant_Noches = e.cantidad_noches and M1.Habitacion_Frente = h.habitacion_frente and M1.Habitacion_Piso = h.piso and M1.Habitacion_Numero=h.nro )	
 FROM gd_esquema.Maestra M1
 Go
 	/* ver tabla Reserva */
