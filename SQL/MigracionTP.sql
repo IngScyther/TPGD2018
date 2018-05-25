@@ -95,13 +95,27 @@ Go
 --15
 /*Migrar Reserva*/ -- Cliente %% id_regimen %% Estado %% Precio
 INSERT INTO ASPIRE_GDD.Reserva 
-( id_codigo_viejo , fecha_inicio,cantidad_noches, id_hotel, id_cliente,id_regimen)
+( id_codigo_viejo , fecha_inicio,cantidad_noches, id_hotel, id_clienteOrigen,id_regimen)
 SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches, 
 	/*Id_Hotel*/(select distinct h.id_hotel
 	from gd_esquema.Maestra m
 	join ASPIRE_GDD.Hotel h on (m.Hotel_Ciudad = h.ciudad and m.Hotel_Calle = h.calle)
 	where m.Hotel_Ciudad = M1.Hotel_Ciudad and m.Hotel_Calle = M1.Hotel_Calle) a,
-	/*Cliente*/null, 
+	/*Cliente*/(
+	select distinct c.id_usuario_cliente
+	from gd_esquema.Maestra m
+	join ASPIRE_GDD.cliente c on (m.Cliente_Pasaporte_Nro = c.pasaporte_numero and
+	m.Cliente_Mail = c.mail and m.Cliente_Apellido = c.apellido and m.Cliente_Nombre = c.nombre
+	and m.Cliente_Fecha_Nac = c.fecha_nacimiento and m.Cliente_Dom_Calle=c.domicilio_calle and
+	m.Cliente_Nro_Calle = c.nro_calle and m.Cliente_Piso = c.piso and m.Cliente_Depto = c.dto
+	and m.Cliente_Nacionalidad = c.nacionalidad  )
+	where M1.Cliente_Pasaporte_Nro = c.pasaporte_numero and
+	M1.Cliente_Mail = c.mail and M1.Cliente_Apellido = c.apellido and M1.Cliente_Nombre = c.nombre
+	and M1.Cliente_Fecha_Nac = c.fecha_nacimiento and M1.Cliente_Dom_Calle=c.domicilio_calle and
+	M1.Cliente_Nro_Calle = c.nro_calle and M1.Cliente_Piso = c.piso and M1.Cliente_Depto = c.dto
+	and M1.Cliente_Nacionalidad = c.nacionalidad
+	), 
+	
 	/*Regimen*/(--select distinct id_regimen from ASPIRE_GDD.regimen r
 	--where M1.Regimen_Precio = r.precio and M1.Regimen_Descripcion = r.descripcion
 	(select distinct r.id_regimen
@@ -110,7 +124,8 @@ SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches,
 	where r.descripcion = M1.Regimen_Descripcion and r.precio = M1.Regimen_Precio)
 	)	
 FROM gd_esquema.Maestra M1
-Go	/* ver tabla Reserva */
+Go
+	/* ver tabla Reserva */
 	delete ASPIRE_GDD.Reserva
 	select * from ASPIRE_GDD.Reserva	
 	Go
