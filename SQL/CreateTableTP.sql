@@ -166,7 +166,7 @@ id_cliente int REFERENCES ASPIRE_GDD.cliente(id_usuario_cliente) /*NOT NULL*/
 --19
 create table ASPIRE_GDD.item
 (
-id_item int primary key,
+id_item int identity(1,1) primary key,
 id_codigo int,
 id_nro int REFERENCES ASPIRE_GDD.factura NOT NULL , --id_nro es FK de factura. A esta tabla le falta el id_factura y el id_consumible
 factura_cantidad int,
