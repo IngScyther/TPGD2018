@@ -147,7 +147,7 @@ INSERT INTO ASPIRE_GDD.factura
 
 select gd1.Factura_Nro, gd1.Factura_Fecha, gd1.Factura_Total,  c.id_usuario_cliente 
 from ASPIRE_GDD.cliente c,
-	gd_esquema.Maestra gd1, 
+	gd_esquema.Maestra gd1 
 where c.pasaporte_numero = gd1.Cliente_Pasaporte_Nro
 	and c.apellido = gd1.Cliente_Apellido
 	and c.nombre = gd1.Cliente_Nombre
