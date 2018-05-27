@@ -159,7 +159,7 @@ CREATE TABLE ASPIRE_GDD.estadiaXCliente(
 create table ASPIRE_GDD.factura
 (id_nro int primary key,
 fecha date,
-total decimal,
+total decimal(10,2),
 forma_de_pago varchar(10),
 id_cliente int REFERENCES ASPIRE_GDD.cliente(id_usuario_cliente) /*NOT NULL*/ 
  )
@@ -170,7 +170,7 @@ id_item int primary key,
 id_codigo int,
 id_nro int REFERENCES ASPIRE_GDD.factura NOT NULL , --id_nro es FK de factura. A esta tabla le falta el id_factura y el id_consumible
 factura_cantidad int,
-factura_monto decimal
+factura_monto decimal(10,2)
 )
 --20
 create table ASPIRE_GDD.HotelxEmpleado 

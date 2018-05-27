@@ -139,21 +139,46 @@ Go
 	delete ASPIRE_GDD.Reserva
 	select * from ASPIRE_GDD.Reserva	
 	Go
+	
 --18
-/*  Migrar tabla Factura */ --Falta armar
+/*  Migracion de datos a tabla Factura */ --Terminada
 INSERT INTO ASPIRE_GDD.factura 
-(fecha,total,id_cliente)
-select gd1.Factura_Fecha,gd1.Factura_Total,id_usuario_cliente from ASPIRE_GDD.cliente c, gd_esquema.Maestra gd1  	
-where gd1.Cliente_Mail = c.mail and gd1.Factura_Fecha is not null and gd1.Factura_Total is not null
-group by id_usuario_cliente,gd1.Factura_Fecha,gd1.Factura_Total
+(id_nro, fecha, total, id_cliente)
+
+select gd1.Factura_Nro, gd1.Factura_Fecha, gd1.Factura_Total,  c.id_usuario_cliente 
+from ASPIRE_GDD.cliente c,
+	gd_esquema.Maestra gd1, 
+where c.pasaporte_numero = gd1.Cliente_Pasaporte_Nro
+	and c.apellido = gd1.Cliente_Apellido
+	and c.nombre = gd1.Cliente_Nombre
+	and c.fecha_nacimiento = gd1.Cliente_Fecha_Nac
+	and c.mail = gd1.Cliente_Mail
+	and c.domicilio_calle = gd1.Cliente_Dom_Calle
+	and c.nro_calle = gd1.Cliente_Nro_Calle
+	and c.piso = gd1.Cliente_Piso
+	and c.dto = gd1.Cliente_Depto
+	and gd1.Factura_Nro is not null
+
+group by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
+order by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
+
 /* ver tabla Factura */
 select * from ASPIRE_GDD.factura	
 Go
---19 --Falta armar
-/*  Migrar tabla item  */ --Falta ID Consumible
+
+
+--19 --
+/*  Migracion de datos a tabla item  */ --Terminada
 INSERT INTO ASPIRE_GDD.item
-select Item_Factura_Cantidad, Item_Factura_Monto
-from gd_esquema.Maestra , Factura, Consumible
-where Factura_Nro = id_factura
-and consumible_codigo = id_codigo
-/* ver tabla Reserva */
+(id_codigo, --Es el id de consumible
+id_nro, --es el id de factura
+factura_cantidad, 
+factura_monto)
+
+select c.id_codigo, f.id_nro, gdm.Item_Factura_Cantidad, gdm.Item_Factura_Monto
+from gd_esquema.Maestra gdm, 
+	ASPIRE_GDD.Factura f, 
+	ASPIRE_GDD.Consumible c
+where gdm.Factura_Nro = f.id_nro
+	and consumible_codigo = c.id_codigo
+
