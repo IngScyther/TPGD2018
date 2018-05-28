@@ -9,8 +9,7 @@ drop table ASPIRE_GDD.historicoConsumiblePorEstadia
 drop table ASPIRE_GDD.HotelxEmpleado;
 --19
 drop table ASPIRE_GDD.item
---18
-drop table ASPIRE_GDD.factura
+
 --17
 drop table ASPIRE_GDD.estadiaXCliente
 --16
@@ -19,6 +18,10 @@ drop table ASPIRE_GDD.Regimen_x_Hotel
 drop table ASPIRE_GDD.Reserva
 --14
 drop table ASPIRE_GDD.estadia
+
+--18
+drop table ASPIRE_GDD.factura
+
 --13
 drop table ASPIRE_GDD.habitacion
 --12

@@ -112,15 +112,26 @@ CREATE TABLE ASPIRE_GDD.habitacion(
 	estado bit NOT NULL,
 	estadistica_de_dias varchar(255) NOT NULL
 );
+
+--18 --Lo puse antes de estadia, porque esta misma necesita que factura esté creada antes
+create table ASPIRE_GDD.factura
+(id_nro int primary key,
+fecha date,
+total decimal(10,2),
+forma_de_pago varchar(10),
+id_cliente int REFERENCES ASPIRE_GDD.cliente(id_usuario_cliente) /*NOT NULL*/ 
+ )
+
 --14
 CREATE TABLE ASPIRE_GDD.estadia(
 	id_estadia int IDENTITY(1,1) PRIMARY KEY,
 	fecha_inicio datetime not null, -- hay campos nulos en maestra, no corresp el NOT NULL
 	fecha_egreso datetime,  -- FORMATO PARA PRUEBAS; datetime NOT NULL ,
 	cantidad_noches numeric(18,0), -- no corresp el NOT NULL,
-	id_consumible int REFERENCES ASPIRE_GDD.consumible(id_codigo) /*NOT NULL*/,
+	--id_consumible int REFERENCES ASPIRE_GDD.consumible(id_codigo) /*NOT NULL*/,
 	id_regimen int REFERENCES ASPIRE_GDD.regimen(id_regimen),
-	id_habitacion int REFERENCES ASPIRE_GDD.habitacion 
+	id_nro int REFERENCES ASPIRE_GDD.factura(id_nro),
+	--id_habitacion int REFERENCES ASPIRE_GDD.habitacion 
 )
 --15
 create table ASPIRE_GDD.Reserva 
@@ -155,14 +166,7 @@ CREATE TABLE ASPIRE_GDD.estadiaXCliente(
 	id_estadia int  REFERENCES ASPIRE_GDD.estadia(id_estadia),
 	PRIMARY KEY (id_usuario_cliente, id_estadia)
 );
---18
-create table ASPIRE_GDD.factura
-(id_nro int primary key,
-fecha date,
-total decimal(10,2),
-forma_de_pago varchar(10),
-id_cliente int REFERENCES ASPIRE_GDD.cliente(id_usuario_cliente) /*NOT NULL*/ 
- )
+
 --19
 create table ASPIRE_GDD.item
 (

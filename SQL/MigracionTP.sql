@@ -76,24 +76,74 @@ Go
 	/* Ver tabla Habitacion */
 select * from ASPIRE_GDD.Habitacion
 GO
+
+
+--18
+/*  Migracion de datos a tabla Factura */ --Terminada
+INSERT INTO ASPIRE_GDD.factura 
+(id_nro, fecha, total, id_cliente)
+
+select gd1.Factura_Nro, gd1.Factura_Fecha, gd1.Factura_Total,  c.id_usuario_cliente 
+from ASPIRE_GDD.cliente c,
+	gd_esquema.Maestra gd1 
+where c.pasaporte_numero = gd1.Cliente_Pasaporte_Nro
+	and c.apellido = gd1.Cliente_Apellido
+	and c.nombre = gd1.Cliente_Nombre
+	and c.fecha_nacimiento = gd1.Cliente_Fecha_Nac
+	and c.mail = gd1.Cliente_Mail
+	and c.domicilio_calle = gd1.Cliente_Dom_Calle
+	and c.nro_calle = gd1.Cliente_Nro_Calle
+	and c.piso = gd1.Cliente_Piso
+	and c.dto = gd1.Cliente_Depto
+	and gd1.Factura_Nro is not null
+
+group by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
+order by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
+
+/* ver tabla Factura */
+select * from ASPIRE_GDD.factura	
+Go
+
+
 --14
-/*  Migrar tabla Estadia */ --Falta ID Consumible
-INSERT INTO ASPIRE_GDD.estadia(
-	fecha_inicio, fecha_egreso, cantidad_noches, id_habitacion)
-SELECT Estadia_Fecha_Inicio, Estadia_Fecha_Inicio + Estadia_Cant_Noches , Estadia_Cant_Noches,
-	(select id_habitacion from ASPIRE_GDD.habitacion ha join ASPIRE_GDD.Hotel Ho on (ha.id_hotel = ho.id_hotel)
-	where gd.Hotel_Ciudad = ho.ciudad and gd.Hotel_Calle = ho.calle and gd.Hotel_Nro_Calle = Ho.nro_calle and
-	 gd.Hotel_CantEstrella = ho.cantidad_de_estrellas and gd.Hotel_Recarga_Estrella = Hotel_Recarga_Estrella and 
-	 gd.Habitacion_Numero = ha.nro and gd.Habitacion_Piso= ha.piso and gd.Habitacion_Frente = ha.habitacion_frente)
-FROM gd_esquema.Maestra gd
-where Estadia_Fecha_Inicio is  not null
+/*  Migrar tabla Estadia */ -- Terminada
+INSERT INTO ASPIRE_GDD.estadia
+(fecha_inicio, fecha_egreso, cantidad_noches, id_regimen, id_nro)
+
+select gd1.Estadia_Fecha_Inicio,
+	Estadia_Fecha_Inicio + Estadia_Cant_Noches fecha_de_egreso,
+	Estadia_Cant_Noches, 
+	id_regimen,
+	id_nro
+from gd_esquema.Maestra gd1, 
+		ASPIRE_GDD.cliente c,
+		ASPIRE_GDD.factura f,
+		ASPIRE_GDD.regimen r
+where c.pasaporte_numero = gd1.Cliente_Pasaporte_Nro
+	and c.apellido = gd1.Cliente_Apellido
+	and c.nombre = gd1.Cliente_Nombre
+	and c.fecha_nacimiento = gd1.Cliente_Fecha_Nac
+	and c.mail = gd1.Cliente_Mail
+	and c.domicilio_calle = gd1.Cliente_Dom_Calle
+	and c.nro_calle = gd1.Cliente_Nro_Calle
+	and c.piso = gd1.Cliente_Piso
+	and c.dto = gd1.Cliente_Depto
+	and gd1.Factura_Nro is not null
+
+	and c.id_usuario_cliente = f.id_cliente
+
+	and gd1.Regimen_Descripcion = r.descripcion
+	and gd1.Regimen_Precio = r.precio
+
+group by gd1.Estadia_Fecha_Inicio, Estadia_Fecha_Inicio + Estadia_Cant_Noches, Estadia_Cant_Noches, id_regimen, id_nro
+
 Go
 /* Ver tabla Estadia */
---delete ASPIRE_GDD.estadia
+
 select * from ASPIRE_GDD.estadia
 Go
 --15
-/*Migrar Reserva*/ -- Cliente %% id_regimen %% Estado %% Precio
+/*Migrar Reserva*/ -- Cliente %% id_regimen %% Estado %% Precio  --Revisar campos y relaciones con las demas tablas (pendiente)
 INSERT INTO ASPIRE_GDD.Reserva 
 ( id_codigo_viejo , fecha_inicio,cantidad_noches, id_hotel, id_clienteOrigen,id_regimen,id_estadia)
 SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches, 
@@ -140,31 +190,7 @@ Go
 	select * from ASPIRE_GDD.Reserva	
 	Go
 	
---18
-/*  Migracion de datos a tabla Factura */ --Terminada
-INSERT INTO ASPIRE_GDD.factura 
-(id_nro, fecha, total, id_cliente)
 
-select gd1.Factura_Nro, gd1.Factura_Fecha, gd1.Factura_Total,  c.id_usuario_cliente 
-from ASPIRE_GDD.cliente c,
-	gd_esquema.Maestra gd1 
-where c.pasaporte_numero = gd1.Cliente_Pasaporte_Nro
-	and c.apellido = gd1.Cliente_Apellido
-	and c.nombre = gd1.Cliente_Nombre
-	and c.fecha_nacimiento = gd1.Cliente_Fecha_Nac
-	and c.mail = gd1.Cliente_Mail
-	and c.domicilio_calle = gd1.Cliente_Dom_Calle
-	and c.nro_calle = gd1.Cliente_Nro_Calle
-	and c.piso = gd1.Cliente_Piso
-	and c.dto = gd1.Cliente_Depto
-	and gd1.Factura_Nro is not null
-
-group by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
-order by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
-
-/* ver tabla Factura */
-select * from ASPIRE_GDD.factura	
-Go
 
 
 --19 --
