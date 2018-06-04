@@ -173,21 +173,19 @@ SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches,
 	where r.descripcion = M1.Regimen_Descripcion and r.precio = M1.Regimen_Precio
 	),
 	/*Estadia*/
-	( select distinct e.id_estadia
+	( select top 1 e.id_estadia
 	from gd_esquema.Maestra m
-	join ASPIRE_GDD.estadia e on (m.Estadia_Fecha_Inicio = e.fecha_inicio and m.Estadia_Cant_Noches = e.cantidad_noches)
-	join ASPIRE_GDD.habitacion h on (e.id_habitacion = h.id_habitacion and m.Habitacion_Frente = h.habitacion_frente and m.Habitacion_Piso = h.piso and m.Habitacion_Numero=h.nro)
-	join ASPIRE_GDD.tipoHabitacion th on (th.tipo_codigo = h.id_habitacion and m.Habitacion_Tipo_Descripcion=th.descripcion and m.Habitacion_Tipo_Porcentual=th.tipo_porcentual)
-	join ASPIRE_GDD.Hotel Ho on (Ho.id_hotel = h.id_hotel)
-	where M1.Hotel_Ciudad = ho.ciudad and M1.Hotel_Calle = ho.calle and M1.Hotel_Nro_Calle = Ho.nro_calle and
-	 M1.Hotel_CantEstrella = ho.cantidad_de_estrellas and M1.Hotel_Recarga_Estrella = Hotel_Recarga_Estrella and 
-	 M1.Habitacion_Numero = h.nro and M1.Habitacion_Piso= h.piso and M1.Habitacion_Frente = h.habitacion_frente
-	 and M1.Estadia_Cant_Noches = e.cantidad_noches and M1.Habitacion_Frente = h.habitacion_frente and M1.Habitacion_Piso = h.piso and M1.Habitacion_Numero=h.nro )	
+	left join ASPIRE_GDD.estadia e on (m.Estadia_Fecha_Inicio = e.fecha_inicio and m.Estadia_Cant_Noches = e.cantidad_noches)
+	where m.Reserva_Codigo = M1.Reserva_Codigo and m.Estadia_Cant_Noches = M1.Estadia_Cant_Noches and m.Estadia_Fecha_Inicio = M1.Estadia_Fecha_Inicio
+	--and m.Cliente_Mail = M1.Cliente_Mail and m.Cliente_Nro_Calle=M1.Cliente_Nro_Calle and m.Hotel_Calle = M1.Hotel_Calle and m.Cliente_Dom_Calle =M1.Cliente_Dom_Calle
+	and e.id_estadia is not null
+	  )	
 FROM gd_esquema.Maestra M1
 Go
 	/* ver tabla Reserva */
 	delete ASPIRE_GDD.Reserva
-	select * from ASPIRE_GDD.Reserva	
+	select * from ASPIRE_GDD.Reserva
+	order by id_estadia	
 	Go
 	
 
