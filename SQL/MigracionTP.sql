@@ -190,6 +190,27 @@ Go
 	
 
 
+--16
+insert into ASPIRE_GDD.Regimen_x_Hotel
+(id_regimen, id_hotel)
+select id_regimen,id_hotel from gd_esquema.Maestra M1, ASPIRE_GDD.Hotel h, ASPIRE_GDD.regimen r 
+where M1.Hotel_Ciudad=h.ciudad and M1.Hotel_Calle = h.calle and M1.Hotel_Nro_Calle=h.nro_calle and M1.Hotel_CantEstrella = h.cantidad_de_estrellas 
+and M1.Regimen_Descripcion=r.descripcion and M1.Regimen_Precio = r.precio
+group by id_hotel,id_regimen 
+Go 
+
+select * from ASPIRE_GDD.Regimen_x_Hotel	
+--17
+insert into ASPIRE_GDD.estadiaXCliente
+(id_estadia,id_usuario_cliente)
+select id_estadia, id_cliente  from ASPIRE_GDD.estadia e , ASPIRE_GDD.factura f
+		where e.id_nro = f.id_nro
+		order by id_estadia 
+		
+Go
+
+
+
 
 --19 --
 /*  Migracion de datos a tabla item  */ --Terminada

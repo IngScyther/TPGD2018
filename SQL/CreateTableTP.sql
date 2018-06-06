@@ -157,8 +157,7 @@ create table ASPIRE_GDD.Regimen_x_Hotel
 (
 	id_regimen int not null REFERENCES ASPIRE_GDD.Regimen,
 	id_hotel int not null REFERENCES ASPIRE_GDD.Hotel,
-	precio int not null,
-	descripcion varchar(160) not null,
+	PRIMARY KEY (id_regimen, id_hotel)
 );
 --17
 CREATE TABLE ASPIRE_GDD.estadiaXCliente(
