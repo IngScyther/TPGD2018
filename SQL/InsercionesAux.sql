@@ -12,11 +12,12 @@ insert ASPIRE_GDD.id_Funcion values ('ABM de Hotel',1)
 insert ASPIRE_GDD.id_Funcion values ('ABM de Habitacion',1)
 insert ASPIRE_GDD.id_Funcion values ('ABM de Regimen de Estadia',1)
 insert ASPIRE_GDD.id_Funcion values ('Generar o Modificar Reserva',1)
+insert ASPIRE_GDD.id_Funcion values ('Cancelar reserva',1)
 insert ASPIRE_GDD.id_Funcion values ('Registrar estadia',1)
 insert ASPIRE_GDD.id_Funcion values ('Registrar consumibles',1)
 insert ASPIRE_GDD.id_Funcion values ('Facturar estadia',1)
 insert ASPIRE_GDD.id_Funcion values ('Listado estadistico',1)
-insert ASPIRE_GDD.id_Funcion values ('Cancelar reserva',1)
+
 Go
 select * from ASPIRE_GDD.id_Funcion
 Go
@@ -29,7 +30,7 @@ Go
 
 alter table ASPIRE_GDD.id_Funcion alter column estado bit
 insert ASPIRE_GDD.rol values ('Administrador',1)
-
+insert ASPIRE_GDD.rol values ('Guest',1)
 
 
 insert ASPIRE_GDD.funcionesX_Rol values (1,1) 
@@ -46,7 +47,7 @@ insert ASPIRE_GDD.funcionesX_Rol values (1,11)
 insert ASPIRE_GDD.funcionesX_Rol values (1,12)
 
 insert ASPIRE_GDD.funcionesX_Rol values (2,7)
-insert ASPIRE_GDD.funcionesX_Rol values (2,12)
+insert ASPIRE_GDD.funcionesX_Rol values (2,8)
 
 select * from ASPIRE_GDD.usuarioBase
 Go
