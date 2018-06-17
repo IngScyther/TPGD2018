@@ -32,12 +32,12 @@ descripcion varchar(100),
 precio decimal)
 --04
 create table ASPIRE_GDD.id_Funcion
-(id_funcion int primary key,
+(id_funcion int identity (1,1) primary key,
 descripcion_func varchar(100),
-estado char(1))
+estado bit)
 --05
 create table ASPIRE_GDD.rol
-(id_rol int primary key,
+(id_rol int identity (1,1) primary key,
 descripcion varchar(50),
 estado bit) --- leí en el grupo de la materia que tambien se puede usar el tipo de dato BIT
 --06
@@ -47,7 +47,7 @@ id_funcion int REFERENCES ASPIRE_GDD.id_Funcion NOT NULL,
 primary key(id_rol,id_funcion))
 --07
 create table ASPIRE_GDD.usuarioBase
-(id_usuario int primary key,
+(id_usuario int identity (1,1) primary key,
 username varchar(20),
 pass varchar(30),
 baja bit) --S o N
