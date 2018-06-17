@@ -50,14 +50,24 @@ create table ASPIRE_GDD.usuarioBase
 (id_usuario int identity (1,1) primary key,
 username varchar(20),
 pass varchar(30),
-baja bit) --S o N
+baja bit,
+	datos_identificatorios varchar(255), 
+	dni numeric(18,0) NOT NULL,
+	mail varchar(255) NOT NULL,
+	telefono numeric(18,0) NOT NULL,
+	direccion varchar(255) NOT NULL,
+	fecha_nacimiento datetime NOT NULL,
+	hotel_dd_se_desempeña int REFERENCES ASPIRE_GDD.hotel(id_hotel) NOT NULL,
+
+
+) --S o N
 --08
 create table ASPIRE_GDD.rolX_Usuario
 (id_usuario int REFERENCES ASPIRE_GDD.usuarioBase NOT NULL,
 id_rol int REFERENCES ASPIRE_GDD.rol NOT NULL,
 primary key(id_usuario, id_rol))
 --09
-CREATE TABLE ASPIRE_GDD.empleado(   -- ojo doble nombre PK idusuempleado Y idusuario
+/*CREATE TABLE ASPIRE_GDD.empleado(   -- ojo doble nombre PK idusuempleado Y idusuario
 	id_usuario_empleado int IDENTITY(1,1) PRIMARY KEY REFERENCES ASPIRE_GDD.usuarioBase(id_usuario),
 	datos_identificatorios varchar(255), 
 	dni numeric(18,0) NOT NULL,
@@ -66,7 +76,7 @@ CREATE TABLE ASPIRE_GDD.empleado(   -- ojo doble nombre PK idusuempleado Y idusu
 	direccion varchar(255) NOT NULL,
 	fecha_nacimiento datetime NOT NULL,
 	hotel_dd_se_desempeña int REFERENCES ASPIRE_GDD.hotel(id_hotel) NOT NULL,
-);
+);*/
 --10
 CREATE TABLE ASPIRE_GDD.tipoHabitacion(
 	--tipo_codigo int IDENTITY(1,1) PRIMARY KEY, --Definir id_tipos para agregar nuevos tipos.
@@ -179,8 +189,9 @@ factura_monto decimal(10,2)
 create table ASPIRE_GDD.HotelxEmpleado 
 (
 	id_Hotel int REFERENCES ASPIRE_GDD.Hotel,
-	id_usuario_empleado int REFERENCES ASPIRE_GDD.Empleado,
-	primary key (id_Hotel,id_usuario_empleado)
+	--id_usuario_empleado int REFERENCES ASPIRE_GDD.Empleado,
+	id_usuario int REFERENCES ASPIRE_GDD.usuarioBase,
+	primary key (id_Hotel,id_usuario)
 );
 --21
 CREATE TABLE ASPIRE_GDD.historicoConsumiblePorEstadia

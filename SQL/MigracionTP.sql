@@ -4,8 +4,8 @@
 use GD1c2018
 
 /*Ver tabla maestra*/
-select * from gd_esquema.Maestra
-Go
+--select * from gd_esquema.Maestra
+--Go
 --1
 /* Migrar tabla Hotel */ --OK
 INSERT INTO ASPIRE_GDD.Hotel 
@@ -15,9 +15,9 @@ FROM gd_esquema.Maestra
 GROUP BY Hotel_Ciudad, Hotel_Calle, Hotel_Nro_Calle,Hotel_CantEstrella,Hotel_Recarga_Estrella
 Go
 /* ver tabla hotel */
-select * from ASPIRE_GDD.Hotel
-order by ciudad,calle
-Go
+--select * from ASPIRE_GDD.Hotel
+--order by ciudad,calle
+--Go
 --3
 /* Migrar tabla Regimen */ --OK
 insert into ASPIRE_GDD.regimen (descripcion, precio)
@@ -26,8 +26,8 @@ from gd_esquema.Maestra
 group by Regimen_Descripcion, Regimen_Precio
 Go
 /* ver tabla Regimen */
-select * from ASPIRE_GDD.regimen
-Go
+--select * from ASPIRE_GDD.regimen
+--Go
 --10
 /*  Migrar tabla Tipo_Habitacion */ --OK
 INSERT INTO  ASPIRE_GDD.tipoHabitacion(tipo_codigo,  --OJO CON tipoCodigo SIN GUIONBAJO
@@ -36,8 +36,8 @@ SELECT DISTINCT Habitacion_Tipo_Codigo,Habitacion_Tipo_Descripcion, Habitacion_T
 FROM gd_esquema.Maestra
 GO
 	/* Ver tabla Tipo_HAbitacion */ 
-select * from ASPIRE_GDD.tipoHabitacion
-GO
+--select * from ASPIRE_GDD.tipoHabitacion
+--GO
 --11
 /*  Migrar tabla cliente */ --OK
 INSERT INTO ASPIRE_GDD.cliente 
@@ -49,8 +49,8 @@ GROUP BY Cliente_Pasaporte_Nro, Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_
 order by  Cliente_Apellido, Cliente_Nombre, Cliente_Fecha_Nac
 Go
 	/* Ver tabla clientes */
-select * from ASPIRE_GDD.cliente
-Go
+--select * from ASPIRE_GDD.cliente
+--Go
 --12
 /*  Migrar tabla Consumible */ --OK
 INSERT INTO  ASPIRE_GDD.consumible(id_codigo,descripcion,precio)
@@ -59,8 +59,8 @@ from gd_esquema.Maestra
 where Consumible_Codigo is not null
 group by consumible_codigo, consumible_descripcion, consumible_precio
 	/* Ver tabla Consumible */
-select * from ASPIRE_GDD.consumible
-Go
+--select * from ASPIRE_GDD.consumible
+--Go
 
 --13
 /*  Migrar tabla Habitacion */ --OK
@@ -74,8 +74,8 @@ GROUP BY Hotel_Ciudad, Hotel_Calle, Hotel_Nro_Calle, Hotel_CantEstrella, Hotel_R
 Habitacion_Numero, Habitacion_Piso, Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_Tipo_Porcentual, Habitacion_Frente
 Go
 	/* Ver tabla Habitacion */
-select * from ASPIRE_GDD.Habitacion
-GO
+--select * from ASPIRE_GDD.Habitacion
+--GO
 
 
 --18
@@ -101,8 +101,8 @@ group by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_T
 order by gd1.Factura_Nro, c.id_usuario_cliente, gd1.Factura_Fecha, gd1.Factura_Total
 
 /* ver tabla Factura */
-select * from ASPIRE_GDD.factura	
-Go
+--select * from ASPIRE_GDD.factura	
+--Go
 
 
 --14
@@ -140,8 +140,8 @@ group by gd1.Estadia_Fecha_Inicio, Estadia_Fecha_Inicio + Estadia_Cant_Noches, E
 Go
 /* Ver tabla Estadia */
 
-select * from ASPIRE_GDD.estadia
-Go
+--select * from ASPIRE_GDD.estadia
+--Go
 --15
 /*Migrar Reserva*/ -- Cliente %% id_regimen %% Estado %% Precio  --Revisar campos y relaciones con las demas tablas (pendiente)
 INSERT INTO ASPIRE_GDD.Reserva 
@@ -183,10 +183,10 @@ SELECT distinct Reserva_Codigo, Reserva_Fecha_Inicio,  Reserva_Cant_Noches,
 FROM gd_esquema.Maestra M1
 Go
 	/* ver tabla Reserva */
-	delete ASPIRE_GDD.Reserva
-	select * from ASPIRE_GDD.Reserva
-	order by id_estadia	
-	Go
+--	delete ASPIRE_GDD.Reserva
+--	select * from ASPIRE_GDD.Reserva
+--	order by id_estadia	
+--	Go
 	
 
 
@@ -199,7 +199,7 @@ and M1.Regimen_Descripcion=r.descripcion and M1.Regimen_Precio = r.precio
 group by id_hotel,id_regimen 
 Go 
 
-select * from ASPIRE_GDD.Regimen_x_Hotel	
+--select * from ASPIRE_GDD.Regimen_x_Hotel	
 --17
 insert into ASPIRE_GDD.estadiaXCliente
 (id_estadia,id_usuario_cliente)

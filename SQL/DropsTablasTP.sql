@@ -31,7 +31,7 @@ drop table ASPIRE_GDD.cliente
 --10
 drop table ASPIRE_GDD.tipoHabitacion
 --09
-drop table ASPIRE_GDD.empleado
+--drop table ASPIRE_GDD.empleado
 --08
 drop table ASPIRE_GDD.rolX_Usuario
 --07
