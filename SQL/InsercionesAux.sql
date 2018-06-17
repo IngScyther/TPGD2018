@@ -29,7 +29,8 @@ Go
 
 alter table ASPIRE_GDD.id_Funcion alter column estado bit
 insert ASPIRE_GDD.rol values (1,'Administrador',cast(1 as bit))
-insert ASPIRE_GDD.rol values (2,'Guest',cast(1 as bit))
+
+
 
 insert ASPIRE_GDD.funcionesX_Rol values (1,1) 
 insert ASPIRE_GDD.funcionesX_Rol values (1,2)
@@ -46,3 +47,17 @@ insert ASPIRE_GDD.funcionesX_Rol values (1,12)
 
 insert ASPIRE_GDD.funcionesX_Rol values (2,7)
 insert ASPIRE_GDD.funcionesX_Rol values (2,12)
+
+select * from ASPIRE_GDD.usuarioBase
+Go
+
+
+insert ASPIRE_GDD.usuarioBase values (1,'admin','w23e',null)
+insert ASPIRE_GDD.rolX_Usuario values(1,1)
+
+select * from ASPIRE_GDD.usuarioBase u 
+join ASPIRE_GDD.rolX_Usuario rxu on (u.id_usuario= rxu.id_usuario)
+join ASPIRE_GDD.rol r on (r.id_rol= rxu.id_rol)
+join ASPIRE_GDD.funcionesX_Rol fxr on (fxr.id_rol= r.id_rol)
+join ASPIRE_GDD.id_Funcion f on (f.id_funcion= fxr.id_funcion)
+order by u.id_usuario
