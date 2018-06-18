@@ -227,3 +227,59 @@ from gd_esquema.Maestra gdm,
 where gdm.Factura_Nro = f.id_nro
 	and consumible_codigo = c.id_codigo
 
+
+/* Cargar tablas manuales */
+
+--1
+insert ASPIRE_GDD.id_Funcion values ('ABM de ROL',1)
+--2
+insert ASPIRE_GDD.id_Funcion values ('ABM de Usuario',1)
+--3
+insert ASPIRE_GDD.id_Funcion values ('ABM de Cliente',1)
+--4
+insert ASPIRE_GDD.id_Funcion values ('ABM de Hotel',1)
+--5
+insert ASPIRE_GDD.id_Funcion values ('ABM de Habitacion',1)
+--6
+insert ASPIRE_GDD.id_Funcion values ('ABM de Regimen de Estadia',1)
+--7
+insert ASPIRE_GDD.id_Funcion values ('Generar o Modificar Reserva',1)
+--8
+insert ASPIRE_GDD.id_Funcion values ('Cancelar reserva',1)
+--9
+insert ASPIRE_GDD.id_Funcion values ('Registrar estadia',1)
+--10
+insert ASPIRE_GDD.id_Funcion values ('Registrar consumibles',1)
+--11
+insert ASPIRE_GDD.id_Funcion values ('Listado estadistico',1)
+
+/* Cargar roles. */
+--1
+insert ASPIRE_GDD.rol values ('Administrador',1)
+--2
+insert ASPIRE_GDD.rol values ('Guest',1)
+--3
+insert ASPIRE_GDD.rol values ('Recepcionista',1)
+
+/* Agregar funcionalidades */
+/*admin*/
+insert ASPIRE_GDD.funcionesX_Rol values (1,1) 
+insert ASPIRE_GDD.funcionesX_Rol values (1,2)
+insert ASPIRE_GDD.funcionesX_Rol values (1,3)
+insert ASPIRE_GDD.funcionesX_Rol values (1,4)
+insert ASPIRE_GDD.funcionesX_Rol values (1,5)
+insert ASPIRE_GDD.funcionesX_Rol values (1,6)
+insert ASPIRE_GDD.funcionesX_Rol values (1,7)
+insert ASPIRE_GDD.funcionesX_Rol values (1,8)
+insert ASPIRE_GDD.funcionesX_Rol values (1,9)
+insert ASPIRE_GDD.funcionesX_Rol values (1,10)
+insert ASPIRE_GDD.funcionesX_Rol values (1,11)
+insert ASPIRE_GDD.funcionesX_Rol values (1,12)
+/*guest*/
+insert ASPIRE_GDD.funcionesX_Rol values (2,7)
+insert ASPIRE_GDD.funcionesX_Rol values (2,8)
+/*recepcionista*/
+insert ASPIRE_GDD.funcionesX_Rol values (3,6)
+insert ASPIRE_GDD.funcionesX_Rol values (3,7)
+insert ASPIRE_GDD.funcionesX_Rol values (3,8)
+insert ASPIRE_GDD.funcionesX_Rol values (3,9)
