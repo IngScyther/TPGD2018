@@ -304,3 +304,5 @@ insert ASPIRE_GDD.HotelxEmpleado values (13,1)
 insert ASPIRE_GDD.HotelxEmpleado values (14,1)
 insert ASPIRE_GDD.HotelxEmpleado values (15,1)
 
+/* admin rol */
+insert ASPIRE_GDD.rolX_Usuario values(1,1)
