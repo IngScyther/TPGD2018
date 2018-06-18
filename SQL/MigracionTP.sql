@@ -283,3 +283,24 @@ insert ASPIRE_GDD.funcionesX_Rol values (3,6)
 insert ASPIRE_GDD.funcionesX_Rol values (3,7)
 insert ASPIRE_GDD.funcionesX_Rol values (3,8)
 insert ASPIRE_GDD.funcionesX_Rol values (3,9)
+
+/* crear el user */
+insert ASPIRE_GDD.usuarioBase values ('admin','w23e',1,null,12345678,'Flavio@Hotel.org',4444444,'Zapata',getdate())
+
+/* Agregar hotel */
+insert ASPIRE_GDD.HotelxEmpleado values (1,1)
+insert ASPIRE_GDD.HotelxEmpleado values (2,1)
+insert ASPIRE_GDD.HotelxEmpleado values (3,1)
+insert ASPIRE_GDD.HotelxEmpleado values (4,1)
+insert ASPIRE_GDD.HotelxEmpleado values (5,1)
+insert ASPIRE_GDD.HotelxEmpleado values (6,1)
+insert ASPIRE_GDD.HotelxEmpleado values (7,1)
+insert ASPIRE_GDD.HotelxEmpleado values (8,1)
+insert ASPIRE_GDD.HotelxEmpleado values (9,1)
+insert ASPIRE_GDD.HotelxEmpleado values (10,1)
+insert ASPIRE_GDD.HotelxEmpleado values (11,1)
+insert ASPIRE_GDD.HotelxEmpleado values (12,1)
+insert ASPIRE_GDD.HotelxEmpleado values (13,1)
+insert ASPIRE_GDD.HotelxEmpleado values (14,1)
+insert ASPIRE_GDD.HotelxEmpleado values (15,1)
+
