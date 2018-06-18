@@ -57,7 +57,7 @@ baja bit,
 	telefono numeric(18,0) NOT NULL,
 	direccion varchar(255) NOT NULL,
 	fecha_nacimiento datetime NOT NULL,
-	hotel_dd_se_desempeña int REFERENCES ASPIRE_GDD.hotel(id_hotel) NOT NULL,
+	--hotel_dd_se_desempeña int REFERENCES ASPIRE_GDD.hotel(id_hotel) NOT NULL,
 
 
 ) --S o N

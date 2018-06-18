@@ -68,7 +68,7 @@ select * from ASPIRE_GDD.usuarioBase
 Go
 
 
-insert ASPIRE_GDD.usuarioBase values ('admin','w23e',null)
+insert ASPIRE_GDD.usuarioBase values ('admin','w23e',1,null,12345678,'Flavio@Hotel.org',4444444,'Zapata',getdate())
 insert ASPIRE_GDD.rolX_Usuario values(1,1)
 
 select * from ASPIRE_GDD.usuarioBase u 
@@ -84,6 +84,21 @@ as
 select * from ASPIRE_GDD.Hab
 Go
 
-select * from 
+select * from ASPIRE_GDD.HotelxEmpleado
+Go
 
-
+insert ASPIRE_GDD.HotelxEmpleado values (1,1)
+insert ASPIRE_GDD.HotelxEmpleado values (2,1)
+insert ASPIRE_GDD.HotelxEmpleado values (3,1)
+insert ASPIRE_GDD.HotelxEmpleado values (4,1)
+insert ASPIRE_GDD.HotelxEmpleado values (5,1)
+insert ASPIRE_GDD.HotelxEmpleado values (6,1)
+insert ASPIRE_GDD.HotelxEmpleado values (7,1)
+insert ASPIRE_GDD.HotelxEmpleado values (8,1)
+insert ASPIRE_GDD.HotelxEmpleado values (9,1)
+insert ASPIRE_GDD.HotelxEmpleado values (10,1)
+insert ASPIRE_GDD.HotelxEmpleado values (11,1)
+insert ASPIRE_GDD.HotelxEmpleado values (12,1)
+insert ASPIRE_GDD.HotelxEmpleado values (13,1)
+insert ASPIRE_GDD.HotelxEmpleado values (14,1)
+insert ASPIRE_GDD.HotelxEmpleado values (15,1)
