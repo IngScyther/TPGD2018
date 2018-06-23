@@ -14,6 +14,7 @@ create table ASPIRE_GDD.Hotel
 	mail varchar(50),
 	fecha_de_creacion date, 
 	pais varchar(50),
+	habilitado bit
 );
 --02
 create table ASPIRE_GDD.Hotel_Cerrado 
