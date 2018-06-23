@@ -2,7 +2,8 @@
 
 use GD1C2018
 Go
-
+--22 
+drop TABLE ASPIRE_GDD.USUARIOxROLxHOTEL
 --21
 drop table ASPIRE_GDD.historicoConsumiblePorEstadia
 --20

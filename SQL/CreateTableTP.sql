@@ -201,3 +201,11 @@ id_estadia int references ASPIRE_GDD.estadia,
 id_consumible int references ASPIRE_GDD.consumible(id_codigo),
 primary key (id_estadia,id_consumible)
 )
+--22
+CREATE TABLE ASPIRE_GDD.USUARIOxROLxHOTEL
+(
+	id_usuario int references ASPIRE_GDD.usuarioBase,
+	id_rol int references ASPIRE_GDD.rol,
+	id_hotel int references ASPIRE_GDD.Hotel,
+	primary key (id_usuario,id_rol,id_hotel)
+)
