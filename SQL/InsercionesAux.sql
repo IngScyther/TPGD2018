@@ -140,3 +140,16 @@ insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,12)
 insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,13)
 insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,14)
 insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,15)
+
+
+drop procedure ASPIRE_GDD.HotelesXUsuario
+create procedure ASPIRE_GDD.HotelesXUsuario
+@idUsuario int
+as
+select u.username, h.id_hotel, h.calle from ASPIRE_GDD.usuarioBase u 
+join ASPIRE_GDD.HotelxEmpleado HxE on (u.id_usuario = HxE.id_usuario)
+join ASPIRE_GDD.Hotel h on (h.id_hotel=HxE.id_Hotel)
+where u.id_usuario = @idUsuario
+order by u.id_usuario;
+
+exec ASPIRE_GDD.HotelesXUsuario 1
