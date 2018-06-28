@@ -111,6 +111,7 @@ insert ASPIRE_GDD.HotelxEmpleado values (15,1)
 
 drop procedure mostrarFuncionesGuest
 Go
+/* Mostrar funciones Guest */
 create procedure mostrarFuncionesGuest
 as
 select f.descripcion_func  from ASPIRE_GDD.rol r
@@ -141,8 +142,8 @@ insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,13)
 insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,14)
 insert ASPIRE_GDD.USUARIOxROLxHOTEL values (1,1,15)
 
-
-drop procedure ASPIRE_GDD.HotelesXUsuario
+/* Procedimiento de loggin */
+--drop procedure ASPIRE_GDD.HotelesXUsuario
 create procedure ASPIRE_GDD.HotelesXUsuario
 @idUsuario int
 as
@@ -153,3 +154,31 @@ where u.id_usuario = @idUsuario
 order by u.id_usuario;
 
 exec ASPIRE_GDD.HotelesXUsuario 1
+
+
+--drop procedure ASPIRE_GDD.RolesxHotelesXUsuario
+create procedure ASPIRE_GDD.RolesxHotelesXUsuario
+@idUsuario int,
+@idHotel int
+as
+select r.id_rol,r.descripcion from ASPIRE_GDD.usuarioBase u 
+join ASPIRE_GDD.rolX_Usuario rxu on (u.id_usuario= rxu.id_usuario)
+join ASPIRE_GDD.rol r on (r.id_rol= rxu.id_rol)
+join ASPIRE_GDD.HotelxEmpleado HxE on (u.id_usuario = HxE.id_usuario)
+join ASPIRE_GDD.Hotel h on (h.id_hotel=HxE.id_Hotel)
+join ASPIRE_GDD.USUARIOxROLxHOTEL urh on (u.id_usuario = urh.id_usuario and r.id_rol = urh.id_rol and h.id_hotel = urh.id_hotel)
+where h.id_hotel = @idHotel and u.id_usuario = @idUsuario
+order by u.id_usuario
+
+exec ASPIRE_GDD.RolesxHotelesXUsuario 1 , 1
+go
+
+-- drop procedure ASPIRE_GDD.MostrarFunciones
+create procedure ASPIRE_GDD.MostrarFunciones
+@idRol int
+as
+select fr.id_funcion, f.descripcion_func from ASPIRE_GDD.funcionesX_Rol fr 
+join ASPIRE_GDD.id_Funcion f on (fr.id_funcion=f.id_funcion)
+where id_rol = @idRol
+
+exec ASPIRE_GDD.MostrarFunciones 1

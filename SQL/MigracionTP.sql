@@ -251,6 +251,8 @@ insert ASPIRE_GDD.id_Funcion values ('Registrar estadia',1)
 --10
 insert ASPIRE_GDD.id_Funcion values ('Registrar consumibles',1)
 --11
+insert ASPIRE_GDD.id_Funcion values ('Facturar Estadia',1)
+--12
 insert ASPIRE_GDD.id_Funcion values ('Listado estadistico',1)
 
 /* Cargar roles. */
